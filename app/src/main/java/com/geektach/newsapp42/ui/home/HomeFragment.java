@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.geektach.newsapp42.OnItemClickListener;
 import com.geektach.newsapp42.R;
 import com.geektach.newsapp42.databinding.FragmentHomeBinding;
 import com.geektach.newsapp42.models.Article;
@@ -22,6 +24,13 @@ import com.geektach.newsapp42.models.Article;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private NewsAdapter adapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new NewsAdapter();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,8 +54,22 @@ public class HomeFragment extends Fragment {
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                         Article article = (Article) result.getSerializable("article");
                         Log.e("Home", "result =" + article.getText());
+                        adapter.addItem(article);
                     }
                 });
+        binding.recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Article article = adapter.getItem(position);
+                Toast.makeText(requireContext(), article.getText(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        });
     }
 
     private void openFragment() {

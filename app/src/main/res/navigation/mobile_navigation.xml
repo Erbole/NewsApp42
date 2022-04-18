@@ -35,4 +35,10 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/boardFragment"
+        android:name="com.geektach.newsapp42.ui.BoardFragment"
+        android:label="fragment_board"
+        tools:layout="@layout/fragment_board" />
+
 </navigation>
