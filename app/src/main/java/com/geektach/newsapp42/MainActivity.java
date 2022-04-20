@@ -16,6 +16,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.geektach.newsapp42.databinding.ActivityMainBinding;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        Prefs prefs = new Prefs(this);
+        if (!prefs.isShown())
+            navController.navigate(R.id.boardFragment);
 
         navController.navigate(R.id.boardFragment);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
@@ -66,5 +72,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return navController.navigateUp();
+    }
+
+    private void files() {
+        File file = new File(getCacheDir(),"note.txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

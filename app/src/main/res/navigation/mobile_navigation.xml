@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/boardFragment"
-        android:name="com.geektach.newsapp42.ui.BoardFragment"
+        android:name="com.geektach.newsapp42.ui.Board.BoardFragment"
         android:label="fragment_board"
         tools:layout="@layout/fragment_board" />
 

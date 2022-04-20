@@ -1,10 +1,12 @@
-package com.geektach.newsapp42.ui;
+package com.geektach.newsapp42.ui.Board;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -12,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.geektach.newsapp42.Prefs;
 import com.geektach.newsapp42.R;
 import com.geektach.newsapp42.databinding.FragmentBoardBinding;
+import com.geektach.newsapp42.ui.Board.BoardAdapter;
 
 public class BoardFragment extends Fragment {
 
@@ -34,6 +38,12 @@ public class BoardFragment extends Fragment {
         BoardAdapter adapter = new BoardAdapter();
         binding.viewPager.setAdapter(adapter);
         binding.dotsIndicator.setViewPager2(binding.viewPager);
+        binding.textSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                close();
+            }
+        });
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -43,5 +53,12 @@ public class BoardFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void close() {
+        Prefs prefs = new Prefs(requireContext());
+        prefs.SaveState();
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigateUp();
     }
 }

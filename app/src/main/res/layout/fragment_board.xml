@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.BoardFragment">
+    tools:context=".ui.Board.BoardFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.viewpager2.widget.ViewPager2
@@ -29,5 +29,15 @@
         app:progressMode="true"
         app:selectedDotColor="@color/white" />
 
+    <TextView
+        android:id="@+id/textSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textStyle="bold"
+        android:text="SKIP"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
