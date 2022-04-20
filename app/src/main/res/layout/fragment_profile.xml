@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/circle_backgrond"
         android:hint="Введите имя"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
         android:padding="12dp"
         android:textColor="@color/black"
         android:textStyle="bold" />

@@ -75,7 +75,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     onItemClickListener.onItemLongClick(getAdapterPosition());
                     new AlertDialog.Builder(view.getContext()).setTitle("Удаление")
                             .setMessage("Вы точно хотите удалить?")
-                            .setNegativeButton("Нет", null)
+                            .setPositiveButton("Нет", null)
                             .setNegativeButton("Да", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {

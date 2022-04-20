@@ -74,12 +74,4 @@ public class MainActivity extends AppCompatActivity {
         return navController.navigateUp();
     }
 
-    private void files() {
-        File file = new File(getCacheDir(),"note.txt");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
