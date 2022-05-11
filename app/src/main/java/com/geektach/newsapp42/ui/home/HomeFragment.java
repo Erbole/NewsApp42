@@ -1,28 +1,38 @@
 package com.geektach.newsapp42.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.geektach.newsapp42.App;
+import com.geektach.newsapp42.News.NewsAdapter;
 import com.geektach.newsapp42.OnItemClickListener;
 import com.geektach.newsapp42.R;
 import com.geektach.newsapp42.databinding.FragmentHomeBinding;
 import com.geektach.newsapp42.models.Article;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
 
+    private List<Article> list;
     private FragmentHomeBinding binding;
     private NewsAdapter adapter;
 
@@ -30,6 +40,9 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter();
+        setHasOptionsMenu(true);
+        List<Article> list = App.getDataBase().articleDao().getAll();
+        adapter.addItems(list);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,6 +61,25 @@ public class HomeFragment extends Fragment {
                 openFragment();
             }
         });
+
+        binding.Search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                list = App.getDataBase().articleDao().getSearch(editable.toString());
+                adapter.addItems(list);
+            }
+        });
+        binding.recyclerView.setAdapter(adapter);
         getParentFragmentManager().setFragmentResultListener(
                 "rk_news", getViewLifecycleOwner(), new FragmentResultListener() {
                     @Override
@@ -57,6 +89,7 @@ public class HomeFragment extends Fragment {
                         adapter.addItem(article);
                     }
                 });
+
         binding.recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override

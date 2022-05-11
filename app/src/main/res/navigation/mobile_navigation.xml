@@ -25,14 +25,14 @@
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.geektach.newsapp42.NewsFragment"
+        android:name="com.geektach.newsapp42.News.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.geektach.newsapp42.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
@@ -40,5 +40,10 @@
         android:name="com.geektach.newsapp42.ui.Board.BoardFragment"
         android:label="fragment_board"
         tools:layout="@layout/fragment_board" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.geektach.newsapp42.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 
 </navigation>

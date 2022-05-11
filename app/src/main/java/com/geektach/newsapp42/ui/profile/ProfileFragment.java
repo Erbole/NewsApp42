@@ -24,6 +24,7 @@ import com.geektach.newsapp42.databinding.FragmentProfileBinding;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
+    private Prefs prefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,31 +37,16 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        prefs = new Prefs(requireContext());
         binding.imageView.setOnClickListener(view1 -> mGetContext.launch("image/*"));
         Prefs prefs = new Prefs(requireContext());
-
-        binding.etName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                prefs.saveEditText(binding.etName.getText().toString());
-            }
-        });
-
         binding.etName.setText(prefs.isEditText());
-        if (prefs.isImageView() != null) ;
-        Glide.with(binding.imageView)
-                .load(prefs.isImageView())
-                .into(binding.imageView);
+        if (prefs.isImageView() != null) {
+            Glide.with(binding.imageView)
+                    .load(prefs.isImageView())
+                    .circleCrop()
+                    .into(binding.imageView);
+        }
     }
 
     ActivityResultLauncher<String> mGetContext = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -71,9 +57,16 @@ public class ProfileFragment extends Fragment {
                     if (result != null) {
                         Glide.with(binding.imageView)
                                 .load(result)
+                                .circleCrop()
                                 .into(binding.imageView);
                         prefs.saveImageView(String.valueOf(result));
                     }
                 }
             });
+
+    @Override
+    public void onPause() {
+        prefs.saveEditText(binding.etName.getText().toString());
+        super.onPause();
+    }
 }

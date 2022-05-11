@@ -1,4 +1,4 @@
-package com.geektach.newsapp42;
+package com.geektach.newsapp42.News;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,12 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.geektach.newsapp42.App;
+import com.geektach.newsapp42.R;
 import com.geektach.newsapp42.databinding.FragmentHomeBinding;
 import com.geektach.newsapp42.databinding.FragmentNewsBinding;
 import com.geektach.newsapp42.models.Article;
@@ -45,10 +49,17 @@ public class NewsFragment extends Fragment {
         Bundle bundle = new Bundle();
         String text = binding.editText.getText().toString().trim();
         if (text.isEmpty()) {
+            boolean invalid = true;
+            if (invalid) {
+                Animation snake = AnimationUtils.loadAnimation(requireContext(), R.anim.snake);
+                binding.editText.startAnimation(snake);
+            }
             Toast.makeText(requireContext(), "Введите новость", Toast.LENGTH_SHORT).show();
             return;
         }
         Article article = new Article(text, System.currentTimeMillis());
+        App.getDataBase().articleDao().insert(article);
+
         bundle.putSerializable("article", article);
         getParentFragmentManager().setFragmentResult("rk_news", bundle);
         close();

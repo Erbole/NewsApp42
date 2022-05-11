@@ -22,14 +22,14 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     public BoardAdapter() {
         list = new ArrayList<>();
-        list.add(new Board("Качок Доге и плачущий Чимс",
-                "Мемом с собаками породы сиба-ину пользователи сравнивали настоящий момент и прошлое. Победа всегда на стороне Доге, и он, как правило, олицетворяет прошедшие времена.",
+        list.add(new Board("",
+                "",
                 R.drawable.photo_1));
-        list.add(new Board("Танцующие носильщики гробов",
-                "Танцующие с гробом темнокожие парни были популярны практически весь год. Первые смешные видео с их участием появились в конце февраля. Популярность они набрали в связи с новостями о коронавирусе.",
+        list.add(new Board("",
+                "",
                 R.drawable.photo_2));
-        list.add(new Board("Наташ, ты спишь?",
-                "Мем «Наташ, ты спишь» стал абсолютным хитом в апреле: с его помощью шутили про коронавирус, самоизоляцию, цифровые пропуска. Потом, в течение года, используя этот шаблон, пользователи обращались к самым разным темам. Этот мем — народный, по мнению Максима Корнева, хотя его и быстро «затаскали» все, кому не лень.",
+        list.add(new Board("",
+                "",
                 R.drawable.photo_3));
     }
 
@@ -76,11 +76,18 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             Board board = list.get(position);
             binding.textDisc.setText(board.getDesc());
             binding.textTitle.setText(board.getTitle());
-            binding.imageView.setImageResource(board.getImage());
             if (position == list.size() - 1) {
                 btn_start.setVisibility(View.VISIBLE);
             } else {
                 btn_start.setVisibility(View.INVISIBLE);
+            }
+
+            if (position == 1) {
+                binding.animationView.setAnimation(R.raw.lottie1);
+            } else if (position == 2) {
+                binding.animationView.setAnimation(R.raw.news);
+            } else {
+                binding.animationView.setAnimation(R.raw.position);
             }
         }
     }

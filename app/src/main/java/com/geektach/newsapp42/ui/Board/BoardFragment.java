@@ -2,6 +2,7 @@ package com.geektach.newsapp42.ui.Board;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -38,6 +39,17 @@ public class BoardFragment extends Fragment {
         BoardAdapter adapter = new BoardAdapter();
         binding.viewPager.setAdapter(adapter);
         binding.dotsIndicator.setViewPager2(binding.viewPager);
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 2) {
+                    binding.textSkip.setVisibility(View.INVISIBLE);
+                } else {
+                    binding.textSkip.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         binding.textSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +61,6 @@ public class BoardFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == 2) {
-
                 }
             }
         });
